@@ -1,27 +1,14 @@
 defmodule Cryptview.Exchanges.CoinbaseClient do
   alias Cryptview.{Trade, Product}
   alias Cryptview.Exchanges.Client
-  import Client, only: [validate_required: 2]
+  require Client
 
-  @behaviour Client
-
-  @impl true
-  def exchange_name, do: "coinbase"
-  @impl true
-  def server_host, do: 'ws-feed.pro.coinbase.com'
-  @impl true
-  def server_port, do: 443
-
-  @impl true
-  def handle_ws_message(%{"type" => "ticker"} = msg, state) do
-    _trade = message_to_trade(msg) |> IO.inspect(label: "trade")
-    {:noreply, state}
-  end
-
-  def handle_ws_message(msg, state) do
-    IO.inspect(msg, label: "unhandled message")
-    {:noreply, state}
-  end
+  Client.defclient(
+    exchange_name: "coinbase",
+    host: 'ws-feed.pro.coinbase.com',
+    port: 443,
+    currency_pairs: ["BTC-USD", "ETH-USD", "LTC-USD", "BTC-EUR", "ETH-EUR", "LTC-EUR"]
+  )
 
   @impl true
   def subscription_frames(currency_pairs) do
@@ -34,6 +21,17 @@ defmodule Cryptview.Exchanges.CoinbaseClient do
       |> Jason.encode!()
 
     [{:text, msg}]
+  end
+
+  @impl true
+  def handle_ws_message(%{"type" => "ticker"} = msg, state) do
+    _trade = message_to_trade(msg) |> IO.inspect(label: "coinbase")
+    {:noreply, state}
+  end
+
+  def handle_ws_message(msg, state) do
+    IO.inspect(msg, label: "unhandled message")
+    {:noreply, state}
   end
 
   @spec message_to_trade(map()) :: {:ok, Trade.t()} | {:error, any()}
