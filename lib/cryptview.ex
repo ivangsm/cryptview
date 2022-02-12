@@ -10,4 +10,7 @@ defmodule Cryptview do
   defdelegate subscribe_to_trades(product), to: Cryptview.Exchanges, as: :subscribe
 
   defdelegate unsubscribe_from_trades(product), to: Cryptview.Exchanges, as: :unsubscribe
+
+  defdelegate get_last_trade(product), to: Cryptview.Historical
+  defdelegate get_last_trades(products), to: Cryptview.Historical
 end
