@@ -14,7 +14,7 @@ defmodule Cryptview.Exchanges do
   def clients, do: @clients
 
   @spec available_products() :: [Product.t()]
-  def available_products, do: @available_products
+  def available_products(), do: @available_products
 
   @spec subscribe(Product.t()) :: :ok | {:error, term()}
   def subscribe(product) do

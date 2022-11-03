@@ -6,7 +6,6 @@ defmodule Cryptview.Historical do
           products: [Product.t()],
           trades: %{Product.t() => Trade.t()}
         }
-
   defstruct [:products, :trades]
 
   @spec get_last_trade(pid() | atom(), Product.t()) :: Trade.t() | nil
@@ -19,6 +18,7 @@ defmodule Cryptview.Historical do
     GenServer.call(pid, {:get_last_trades, products})
   end
 
+  # :products
   def start_link(opts) do
     {products, opts} = Keyword.pop(opts, :products, [])
     GenServer.start_link(__MODULE__, products, opts)
