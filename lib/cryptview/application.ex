@@ -12,6 +12,8 @@ defmodule Cryptview.Application do
       CryptviewWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Cryptview.PubSub},
+      {Cryptview.Historical, name: Cryptview.Historical},
+      {Cryptview.Exchanges.Supervisor, name: Cryptview.Exchanges.Supervisor},
       # Start the Endpoint (http/https)
       CryptviewWeb.Endpoint
       # Start a worker by calling: Cryptview.Worker.start_link(arg)

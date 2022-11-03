@@ -47,7 +47,8 @@ defmodule Cryptview.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:gun, "~> 1.3"},
-      {:cowlib, "~> 2.7", override: true}
+      {:cowlib, "~> 2.7", override: true},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
   end
 
